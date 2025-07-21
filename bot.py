@@ -121,4 +121,4 @@ async def on_ready():
         print(f"Erro ao registrar slash commands: {e}")
     print(f"🤖 Bot online como {bot.user}")
 
-bot.run("DISCORD_TOKEN")
+bot.run(os.getenv("DISCORD_TOKEN"))
