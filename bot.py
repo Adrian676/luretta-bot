@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from discord.utils import get
+import os
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="/", intents=intents)
