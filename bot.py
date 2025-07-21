@@ -3,13 +3,16 @@ from discord.ext import commands
 from discord.utils import get
 
 intents = discord.Intents.all()
-bot = commands.Bot(command_prefix="!", intents=intents)
+bot = commands.Bot(command_prefix="/", intents=intents)
 
+# Catálogo de produtos
 produtos = {
-    "vip": {"nome": "Acesso VIP", "preco": "R$ 20,00", "descricao": "Acesso à área VIP com vantagens."},
-    "curso": {"nome": "Curso Python", "preco": "R$ 49,90", "descricao": "Curso de Python com certificado."},
+    "botg": {"nome": "Bot Geral", "preco": "R$ 40,00", "descricao": "Bot completo que faz tudo"},
+    "bott": {"nome": "Bot de Ticket", "preco": "R$ 30,00", "descricao": "Bot de tickets para suporte"},
+    "botm": {"nome": "Bot de Música", "preco": "R$ 30,00", "descricao": "Bot de música com várias funções"},
 }
 
+# Configurações
 SUPORTE_ROLE = "Suporte"
 CARGO_COMPRADOR = "Comprador"
 CATEGORIA_TICKET = "Tickets"
@@ -70,8 +73,7 @@ class TicketView(discord.ui.View):
 
         canal = await guild.create_text_channel(canal_nome, category=categoria, overwrites=overwrites)
         await canal.send(
-            f"{self.user.mention}, seu pedido de **{produtos[self.produto_id]['nome']}** está em análise.
-"
+            f"{self.user.mention}, seu pedido de **{produtos[self.produto_id]['nome']}** está em análise.\n"
             f"A equipe de suporte confirmará o pagamento em breve.",
             view=ConfirmarPagamentoView(self.user, self.produto_id)
         )
@@ -84,8 +86,7 @@ async def slash_produtos(interaction: discord.Interaction):
     for pid, p in produtos.items():
         embed.add_field(
             name=f"{p['nome']} — {p['preco']}",
-            value=f"{p['descricao']}
-Use `/comprar {pid}` para adquirir.",
+            value=f"{p['descricao']}\nUse `/comprar {pid}` para adquirir.",
             inline=False
         )
     await interaction.response.send_message(embed=embed)
@@ -100,12 +101,9 @@ async def slash_comprar(interaction: discord.Interaction, produto: str):
     embed = discord.Embed(
         title=f"💳 Compra de {p['nome']}",
         description=(
-            f"💰 Valor: {p['preco']}
-"
-            f"{p['descricao']}
-
-"
-            "Após pagamento no Pix `exemplo@pix.com.br`, clique no botão abaixo."
+            f"💰 Valor: {p['preco']}\n"
+            f"{p['descricao']}\n\n"
+            "Após pagamento no Pix `adrianalmarques80@gmail.com`, clique no botão abaixo."
         ),
         color=0x3498db
     )
@@ -122,4 +120,4 @@ async def on_ready():
         print(f"Erro ao registrar slash commands: {e}")
     print(f"🤖 Bot online como {bot.user}")
 
-bot.run("SEU_TOKEN_AQUI")
+bot.run("MTM5NjgyNDc4NzUwMTk3MzYxNA.Gzl5BO.Sx7grDNe9PfsqUI-8odWoQwTAjabhfqdCgMDiE")
